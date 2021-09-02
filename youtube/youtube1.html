@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        header {
+  padding: 1rem;
+
+  display: flex;
+  justify-content: flex end;
+  background-color: whitesmoke;
+}
+#logo{
+    width: 70px;
+    height: 70px;
+    margin-left: 5px;;
+}
+.Search {
+  background-color: transparent;
+  border: 2px solid red;
+  padding: 0.5rem 1rem;
+  
+  font-size: 1rem;
+  color: #fff;
+  width: 50%;
+  height: 40px;
+  margin-left: 25%;
+ 
+}
+.button{
+    background-color: red;
+  border: 2px solid red;
+  padding: 0.5rem 1rem;
+  
+  font-size: 1rem;
+  color: #fff;
+  width: 10%;
+  height: 57px;
+ 
+
+}
+    </style>
+</head>
+<body>
+    
+      <header>
+          <img  id= "logo"src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQE3NZGa-jW2wMBtO0c7cQfxkQMlbpB2zp3hg&usqp=CAU">
+     
+          <input class="Search" type="text" id="video" placeholder="Search for video..." />
+
+           <button class="button" onclick="searchVideos()" >Search</button>
+        </header>
+      
+      
+   
+
+    <div id="videos-div"></div>
+  
+   
+
+  
+</body>
+</html>
+<script>
+    let div = document.getElementById('videos-div')
+    async function searchVideos()
+    {
+        let video = document.getElementById('video').value;
+        // 'https://youtube.googleapis.com/youtube/v3/search?q=tesla&key=[YOUR_API_KEY]'
+        let res = await fetch(`https://youtube.googleapis.com/youtube/v3/search?q=${video}&type=vedio&key= AIzaSyBUuPNTq1rK6OSqXZCO4PfBWnAWx74Qu2o&maxResults=20`)
+
+        let data = await res.json();
+        console.log(data);
+
+        for({
+            id: {videoId},etag,
+        } of data.items)
+        {
+           let video_frame = document.createElement("iframe");
+
+           video_frame.src = `https://www.youtube.com/embed/${videoId}`;
+           video_frame.allow = `fullscreen`;
+          
+
+           div.appendChild(video_frame);
+        }
+    }
+
+    // <iframe width="560"
+    //  height="315" 
+    //  src="https://www.youtube.com/embed/DG16TL3xTWg"
+    //   title="YouTube video player" frameborder="0"
+    //    allow=></iframe>
+</script>
+
